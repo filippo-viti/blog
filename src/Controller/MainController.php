@@ -138,4 +138,15 @@ class MainController extends AbstractController
         return $this->redirectToRoute('app_main_index');
     }
 
+    /**
+     * @Route("/read/{id}", name="app_blog_read")
+     * 
+     * @param Blog $blog
+     * 
+     * @return Response
+     */
+    public function readBlog(Blog $blog): Response
+    {
+        return $this->render('read.html.twig', ['blog' => $blog]);
+    }
 }
