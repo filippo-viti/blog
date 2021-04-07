@@ -24,6 +24,7 @@
 
                 <tr>
                     <th>Title</th>
+                    <th>Category</th>
                     <th>Short description</th>
                     <th>Actions</th>
                 </tr>
@@ -32,6 +33,7 @@
                 {% for blog in blogs %}
                     <tr>
                         <td>{{ blog.title }}</td>
+                        <td>{{ blog.category.name }}</td>
                         <td>{{ blog.shortDescription }}</td>
                         <td>
                             <a href="{{ path('app_blog_read', {id: blog.id}) }}" class="btn btn-primary">Read</a>

@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Blog;
+use App\Entity\Category;
 
 class AppFixtures extends Fixture
 {
@@ -14,6 +15,9 @@ class AppFixtures extends Fixture
         // $manager->persist($product);
 
         for ($i = 0; $i < 4; ++$i) {
+            $category = new Category();
+            $category->setName("Cat" . $i);
+            $manager->persist($category);
             $blog = new Blog();
             $blog->setTitle('Lorem ipsum');
             $blog->setBody('Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -23,6 +27,7 @@ class AppFixtures extends Fixture
               Pellentesque sit amet lacus in metus placerat posuere. Aliquam hendrerit risus elit, non commodo nulla cursus id. 
               Vivamus tristique felis leo, vitae laoreet sapien eleifend vitae. Etiam varius sollicitudin tincidunt');
             $blog->setShortDescription('Lorem ipsum description');
+            $blog->setCategory($category);
             $manager->persist($blog);
         }
         $manager->flush();
