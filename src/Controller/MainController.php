@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use App\Repository\BlogRepository;
 use App\Entity\Blog;
+use App\Entity\Category;
 use App\Form\BlogFormType;
 
 class MainController extends AbstractController
@@ -41,6 +42,9 @@ class MainController extends AbstractController
      */
     public function createBlog(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
     {
+        $categories = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->findAll();
         $blog = new Blog();
         $form = $this->createForm(BlogFormType::class, $blog);
 
