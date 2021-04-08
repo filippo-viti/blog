@@ -14,9 +14,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use App\Repository\BlogRepository;
+use App\Repository\CategoryRepository;
 use App\Entity\Blog;
 use App\Entity\Category;
 use App\Form\BlogFormType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class MainController extends AbstractController
 {
@@ -24,13 +27,42 @@ class MainController extends AbstractController
      * @Route("/")
      *
      * @param BlogRepository $blogRepository
+     * @param Request $request
      *
      * @return Response
      */
-    public function index(BlogRepository $blogRepository)
+    public function index(Request $request, BlogRepository $blogRepository)
     {
-        $blogs = $blogRepository->findAll();
-        return $this->render('list.html.twig', ['blogs'=>$blogs]);
+        $defaultData = ['category' => null];
+        $form = $this->createFormBuilder($defaultData)
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'query_builder' => function (CategoryRepository $er) {
+                    return $er->createQueryBuilder('n')
+                        ->orderBy('n.name', 'ASC');
+                },
+                'choice_label' => 'name',
+                'required' => false
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Filter'
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+        if($form->isSubmitted()) {
+            $category = $form->getData();
+            if($category['category'] == null) {
+                $blogs = $blogRepository->findAll();
+            } else {
+                $blogs = $blogRepository->findBy(['category' => $category]);
+            }
+        } else {
+            $blogs = $blogRepository->findAll();
+        }
+        return $this->render('list.html.twig', [
+            'blogs' => $blogs,
+            'form' => $form->createView()
+            ]);
     }
 
      /**

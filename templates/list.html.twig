@@ -1,50 +1,58 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}
-    <style>
-        .align-center {
-            margin: 0 auto;
-        }
-    </style>
-{% endblock %}
 {% block body %}
-    <div class="row">
-        <div class="col-lg-8 align-center">
+    <div class="container">
+        <div class="row">
             <h1>Blogs</h1>
+        </div>
+        <div class="row">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="form-group">
+                {{ form_row(form.category) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.submit) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                
 
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="flash-{{ label }}">
-                        {{ message }}
-                    </div>
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="flash-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
 
-            <table class="table table-striped ">
-                <thead class="thead-dark">
+                <table class="table table-striped ">
+                    <thead class="thead-dark">
 
-                <tr>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Short description</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for blog in blogs %}
                     <tr>
-                        <td>{{ blog.title }}</td>
-                        <td>{{ blog.category.name }}</td>
-                        <td>{{ blog.shortDescription }}</td>
-                        <td>
-                            <a href="{{ path('app_blog_read', {id: blog.id}) }}" class="btn btn-primary">Read</a>
-                            <a href="{{ path('app_main_editblog', {id: blog.id}) }}" class="btn btn-primary">Edit</a>
-                            <a href="{{ path('app_blog_delete', {id: blog.id}) }}" onclick="return confirm('Sei sicuro?');" class="btn btn-danger">DELETE</a>
-                        </td>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Short description</th>
+                        <th>Actions</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for blog in blogs %}
+                        <tr>
+                            <td>{{ blog.title }}</td>
+                            <td>{{ blog.category.name }}</td>
+                            <td>{{ blog.shortDescription }}</td>
+                            <td>
+                                <a href="{{ path('app_blog_read', {id: blog.id}) }}" class="btn btn-primary">Read</a>
+                                <a href="{{ path('app_main_editblog', {id: blog.id}) }}" class="btn btn-primary">Edit</a>
+                                <a href="{{ path('app_blog_delete', {id: blog.id}) }}" onclick="return confirm('Sei sicuro?');" class="btn btn-danger">DELETE</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
 
+            </div>
         </div>
     </div>
     <div class="row">
