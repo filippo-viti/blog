@@ -9,10 +9,10 @@
             <p></p>
             {% if blog.image %}
             {# immagine trovata, visualizzala #}
-            <img src="{{img_dir}}{{blog.image}}" class="" alt="{{blog.title}}">
+            <img src="/img/blogs/{{blog.image}}" class="" alt="{{blog.title}}">
             {% else %}
             {# immagine non trovata, visualizza immagine default #}
-            <img src="{{img_dir}}default.png" class="img-fluid rounded" alt="Default image">
+            <img src="/img/blogs/default.png" class="img-fluid rounded" alt="Default image">
             {% endif %}
             <p class="mt-2">{{blog.body}}</p>
         </div>

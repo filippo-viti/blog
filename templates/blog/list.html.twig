@@ -30,10 +30,10 @@
                 <div class="card mb-4" style="width: 18rem;">
                     {% if blog.image %}
                         {# immagine trovata, visualizzala #}
-                        <img src="{{img_dir}}{{blog.image}}" class="" alt="{{blog.title}}">
+                        <img src="/img/blogs/{{blog.image}}" class="" alt="{{blog.title}}">
                     {% else %}
                         {# immagine non trovata, visualizza immagine default #}
-                        <img src="{{img_dir}}default.png" class="img-fluid rounded" alt="Default image">
+                        <img src="/img/blogs/default.png" class="img-fluid rounded" alt="Default image">
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{blog.title}}</h5>
