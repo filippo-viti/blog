@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-        <div class="col-lg-8 align-center">
+        <div class="col-lg-8 mx-auto mt-4">
             <h1>Create new blog entry.</h1>
 
              {% for label, messages in app.flashes %}
@@ -33,7 +33,7 @@
                 {{ form_row(form.body) }}
             </div>
 
-            <input type="submit" class="btn btn-primary"/>
+            <input type="submit" class="btn btn-primary btn-block"/>
 
             {{ form_end(form) }}
         </div>
