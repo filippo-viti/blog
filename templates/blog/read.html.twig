@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ blog.title }}{% endblock %}
 {% block body %}
-    <div class="container-fluid mx-auto">
+    <main class="container-fluid mx-auto">
         <div class="jumbotron mt-4">
             <h1 class="display-4">{{blog.title}} - {{blog.category.name}}</h1>
             <p class="lead">{{blog.shortDescription}}</p>
@@ -16,5 +16,5 @@
             {% endif %}
             <p class="mt-2">{{blog.body}}</p>
         </div>
-    </div>
+    </main>
 {% endblock %}

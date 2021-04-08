@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}Blogs{% endblock %}
 {% block body %}
-<div class="container-fluid mx-2">
+<main class="container-fluid mx-2">
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     <div class="form-group d-flex align-items-center justify-content-between row mt-4">
@@ -49,7 +49,7 @@
         {% endif %}
 
     </div>
-</div>
+</main>
 
 
 {% endblock %}
