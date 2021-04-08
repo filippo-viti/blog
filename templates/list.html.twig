@@ -37,7 +37,9 @@
                     <div class="card-body">
                         <h5 class="card-title">{{blog.title}}</h5>
                         <p class="card-text">{{blog.shortDescription}}</p>
-                        <a href="#" class="btn btn-primary">Read more</a>
+                        <a href="{{path('app_blog_read', {id: blog.id})}}" class="btn btn-primary">Read more</a>
+                        <a href="{{path('app_main_editblog', {id: blog.id})}}" class="btn btn-primary">Edit</a>
+                        <a href="{{path('app_blog_read', {id: blog.id})}}" class="btn btn-danger">Delete</a>
                     </div>
                 </div>
             {% endfor %}
