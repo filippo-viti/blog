@@ -6,10 +6,10 @@
     <p class="text-muted">{{blog.shortDescription}}</p>
     {% if blog.image %}
         {# immagine trovata, visualizzala #}
-        <img src="../{{blog.image}}" alt="{{blog.title}}">
+        <img src="../img/{{blog.image}}" alt="{{blog.title}}">
     {% else %}
         {# immagine non trovata, visualizza immagine default #}
-        <img src="../default.png" alt="Default image">
+        <img src="../img/default.png" alt="Default image">
     {% endif %}
     <p>{{blog.body}}</p>
 {% endblock %}
