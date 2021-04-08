@@ -11,11 +11,25 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+        $category_names = [
+            "Science",
+            "Technology",
+            "Lifestyle",
+            "Sport",
+            "Travel"
+        ];
+
+        $categories = [];
+
+        foreach($category_names as $name) {
+            $category = new Category();
+            $category->setName($name);
+            $categories[] = $category;
+            $manager->persist($category);
+        }
 
         for ($i = 0; $i < 10; ++$i) {
-            $category = new Category();
-            $category->setName("Cat" . $i);
-            $manager->persist($category);
+            
             $blog = new Blog();
             $blog->setTitle('Lorem ipsum');
             $blog->setBody('Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -25,7 +39,7 @@ class AppFixtures extends Fixture
               Pellentesque sit amet lacus in metus placerat posuere. Aliquam hendrerit risus elit, non commodo nulla cursus id. 
               Vivamus tristique felis leo, vitae laoreet sapien eleifend vitae. Etiam varius sollicitudin tincidunt');
             $blog->setShortDescription('Lorem ipsum description');
-            $blog->setCategory($category);
+            $blog->setCategory($categories[$i % sizeof($categories)]);
             $manager->persist($blog);
         }
         $manager->flush();
