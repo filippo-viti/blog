@@ -27,7 +27,7 @@ class BlogController extends AbstractController
 {
 
     /**
-     * @Route("/")
+     * @Route("s/")
      */
     public function index()
     {
@@ -156,7 +156,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/{category}")
+     * @Route("s/{category}")
      * 
      * @param BlogRepository $blogRepository
      *
