@@ -43,9 +43,7 @@ class BlogController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
     {
-        $categories = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findAll();
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $blog = new Blog();
         $form = $this->createForm(BlogFormType::class, $blog);
 
@@ -89,6 +87,7 @@ class BlogController extends AbstractController
      */
     public function edit(Blog $blog, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         if ($blog->getImage()){
             $blog->setImage(new File(sprintf('%s/%s', $this->getParameter('image_directory'), $blog->getImage())));
         }
@@ -136,6 +135,7 @@ class BlogController extends AbstractController
      */
     public function delete(Blog $blog, EntityManagerInterface $em): RedirectResponse
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $em->remove($blog);
         $em->flush();
         $this->addFlash('success', 'Blog was edited!');
