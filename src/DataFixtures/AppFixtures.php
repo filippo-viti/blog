@@ -21,8 +21,8 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $categories = $this->loadCategories($manager);
-        $this->loadUsers($manager);
-        $this->loadBlogs($manager, $categories);    
+        $users = $this->loadUsers($manager);
+        $this->loadBlogs($manager, $categories, $users);    
         $manager->flush();
     }
 
@@ -72,7 +72,7 @@ class AppFixtures extends Fixture
         return $users;
     }
 
-    private function loadBlogs(ObjectManager $manager, $categories)
+    private function loadBlogs(ObjectManager $manager, $categories, $users)
     {
         for ($i = 0; $i < 10; ++$i) {   
             $blog = new Blog();
@@ -85,6 +85,7 @@ class AppFixtures extends Fixture
               Vivamus tristique felis leo, vitae laoreet sapien eleifend vitae. Etiam varius sollicitudin tincidunt');
             $blog->setShortDescription('Lorem ipsum description');
             $blog->setCategory($categories[$i % sizeof($categories)]);
+            $blog->setCreator($users[$i % sizeof($users)]);
             $manager->persist($blog);
         }
     }
