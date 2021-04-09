@@ -12,13 +12,10 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use App\Repository\CategoryRepository;
 use App\Repository\BlogRepository;
-use App\Entity\Category;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Blog;
 use App\Form\BlogFormType;
+use App\Service\ImageHelper;
 
 /**
  * @Route("/blog")
@@ -41,7 +38,7 @@ class BlogController extends AbstractController
      *
      * @return Response
      */
-    public function create(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
+    public function create(Request $request, EntityManagerInterface $entityManager, ImageHelper $imageHelper)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $blog = new Blog();
@@ -51,20 +48,15 @@ class BlogController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $blog = $form->getData();
             $imageFile = $form->get('imageFile')->getData();
+            
             if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
                 try {
-                    $imageFile->move(
-                        $this->getParameter('image_directory'),
-                        $newFilename
-                    );
+                    $dir = $this->getParameter('image_directory') . '/blogs';
+                    $newFilename = $imageHelper->upload($imageFile, $dir);
+                    $blog->setImage($newFilename);
                 } catch (FileException $e) {
                     $this->addFlash('error', 'Image cannot be saved.');
                 }
-                $blog->setImage($newFilename);
             }
             $blog->setCreator($this->getUser());
             $entityManager->persist($blog);
