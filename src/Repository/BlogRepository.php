@@ -19,6 +19,11 @@ class BlogRepository extends ServiceEntityRepository
         parent::__construct($registry, Blog::class);
     }
 
+    public function findAll()
+    {
+        return $this->findBy(array(), array('title' => 'ASC'));
+    }
+
     /**
      * @return Blog[] Returns an array of Blog objects
      */
