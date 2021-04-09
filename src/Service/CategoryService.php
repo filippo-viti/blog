@@ -5,15 +5,15 @@ use App\Repository\CategoryRepository;
 
 class CategoryService {
 
-    private $categoryRepository;
+     private $categoryRepository;
 
-   public function __construct(CategoryRepository $categoryRepository)
-   {
-        $this->categoryRepository = $categoryRepository;
-   }
+     public function __construct(CategoryRepository $categoryRepository)
+     {
+          $this->categoryRepository = $categoryRepository;
+     }
 
-   public function getAll()
-   {
-        return $this->categoryRepository->findAll();
-   }
+     public function getAll()
+     {
+          return $this->categoryRepository->findAll();
+     }
 }
