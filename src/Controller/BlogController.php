@@ -66,7 +66,7 @@ class BlogController extends AbstractController
                 }
                 $blog->setImage($newFilename);
             }
-
+            $blog->setCreator($this->getUser());
             $entityManager->persist($blog);
             $entityManager->flush();
             $this->addFlash('success', 'Blog was created!');
