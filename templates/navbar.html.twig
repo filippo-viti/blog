@@ -19,6 +19,8 @@
             <a class="btn btn-success my-2 mr-sm-2 my-sm-0" href="{{ path('app_login') }}">Login</a>
             {% if app.user %}
             <a class="btn btn-danger my-2 my-sm-0" href="{{ path('app_logout') }}">Logout</a>
+            {% else %}
+            <a class="btn btn-primary my-2 my-sm-0" href="{{ path('app_register') }}">Register</a>
             {% endif %}
         </div>
     </nav>
