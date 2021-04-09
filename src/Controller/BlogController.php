@@ -159,41 +159,19 @@ class BlogController extends AbstractController
      * @Route("/{category}")
      * 
      * @param BlogRepository $blogRepository
-     * @param Request $request
      *
      * @return Response
      */
-    public function list(Request $request, BlogRepository $blogRepository): Response
+    public function list(BlogRepository $blogRepository, $category): Response
     {
-        $defaultData = ['category' => null];
-        $form = $this->createFormBuilder($defaultData)
-            ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'query_builder' => function (CategoryRepository $er) {
-                    return $er->createQueryBuilder('n')
-                        ->orderBy('n.name', 'ASC');
-                },
-                'choice_label' => 'name',
-                'required' => false
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Filter'
-            ])
-            ->getForm();
-        $form->handleRequest($request);
-        if($form->isSubmitted()) {
-            $category = $form->getData();
-            if($category['category'] == null) {
-                $blogs = $blogRepository->findAll();
-            } else {
-                $blogs = $blogRepository->findBy(['category' => $category]);
-            }
-        } else {
+        if ($category == 'all') {
             $blogs = $blogRepository->findAll();
+        } else {
+
+            $blogs = $blogRepository->findByCategoryName($category);
         }
         return $this->render('blog/list.html.twig', [
             'blogs' => $blogs,
-            'form' => $form->createView()
             ]);
     }
 }
