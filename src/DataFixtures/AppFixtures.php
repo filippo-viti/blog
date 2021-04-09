@@ -67,6 +67,7 @@ class AppFixtures extends Fixture
                 $password
             ));
             $users[] = $user;
+            $manager->persist($user);
         }
         return $users;
     }
