@@ -55,7 +55,7 @@ class BlogController extends AbstractController
                     $newFilename = $imageHelper->upload($imageFile, $dir);
                     $blog->setImage($newFilename);
                 } catch (FileException $e) {
-                    $this->addFlash('error', 'Image cannot be saved.');
+                    $this->addFlash('danger', 'Image cannot be saved.');
                 }
             }
             $blog->setCreator($this->getUser());
@@ -101,7 +101,7 @@ class BlogController extends AbstractController
                             $newFilename
                         );
                 } catch (FileException $e) {
-                    $this->addFlash('error', 'Image cannot be saved.');
+                    $this->addFlash('danger', 'Image cannot be saved.');
                 }
                 $blog->setImage($newFilename);
             }
