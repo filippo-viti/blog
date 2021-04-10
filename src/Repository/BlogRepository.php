@@ -24,25 +24,6 @@ class BlogRepository extends ServiceEntityRepository
         return $this->findBy(array(), array('title' => 'ASC'));
     }
 
-    /**
-     * @return Blog[] Returns an array of Blog objects
-     */
-    
-    public function findByCategoryName($name)
-    {
-        $entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            'SELECT b
-            FROM App\Entity\Blog b
-            JOIN b.category c
-            WHERE c.name = :name
-            ORDER BY c.name ASC'
-        )->setParameter('name', $name);
-
-        return $query->getResult();
-    }
-
     /*
     public function findOneBySomeField($value): ?Blog
     {

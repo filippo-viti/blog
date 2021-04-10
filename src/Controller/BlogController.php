@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Repository\BlogRepository;
 use App\Entity\Blog;
 use App\Form\BlogFormType;
+use App\Repository\CategoryRepository;
 use App\Service\ImageHelper;
 
 /**
@@ -154,13 +155,12 @@ class BlogController extends AbstractController
      *
      * @return Response
      */
-    public function list(BlogRepository $blogRepository, $category): Response
+    public function list(BlogRepository $blogRepository, CategoryRepository $categoryRepository, $category): Response
     {
         if ($category == 'all') {
             $blogs = $blogRepository->findAll();
         } else {
-
-            $blogs = $blogRepository->findByCategoryName($category);
+            $blogs = $categoryRepository->findOneBy(['name' => $category])->getBlogs();
         }
         return $this->render('blog/list.html.twig', [
             'blogs' => $blogs,
