@@ -29,7 +29,8 @@
                         <h5 class="card-title">
                             <a class="stretched-link text-body" href="{{path('app_blog_read', {id: blog.id})}}">{{blog.title}}</a>
                         </h5>
-                        <p class="card-text text-muted">{{blog.shortDescription}}</p>
+                        <span class="badge badge-pill badge-primary">{{blog.category.name}}</span>
+                        <p class="card-text text-muted mt-1">{{blog.shortDescription}}</p>
                         <p class="card-text">By {{blog.creator.username}}</p>
                         <div class="d-flex justify-content-end">
                             {% if (app.user == blog.creator) %}
