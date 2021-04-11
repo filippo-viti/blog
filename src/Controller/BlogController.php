@@ -80,7 +80,9 @@ class BlogController extends AbstractController
      */
     public function edit(Blog $blog, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        if ($blog->getCreator() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
         if ($blog->getImage()){
             $blog->setImage(new File(sprintf('%s/%s', $this->getParameter('image_directory'), $blog->getImage())));
         }
@@ -128,7 +130,9 @@ class BlogController extends AbstractController
      */
     public function delete(Blog $blog, EntityManagerInterface $em): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        if ($blog->getCreator() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
         $em->remove($blog);
         $em->flush();
         $this->addFlash('success', 'Blog was edited!');
