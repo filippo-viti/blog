@@ -35,7 +35,7 @@
                 <div class="dropdown-menu dropdown-menu-left dropdown-menu-lg-right" aria-labelledby="dropdownMenuToggle">
                     {# TODO: implement profile and blogs pages #}
                     <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="#">My blogs</a>
+                    <a class="dropdown-item" href="{{ path('app_user_blogs', {id: app.user.id}) }}">My blogs</a>
                     <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Logout</a>
                 </div>
             </div>
